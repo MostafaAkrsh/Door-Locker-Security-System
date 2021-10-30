@@ -1,0 +1,10 @@
+18:28:22 **** Incremental Build of configuration Debug for project Control_ECU ****
+make all 
+Building target: Control_ECU.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Control_ECU.map -mmcu=atmega16 -o "Control_ECU.elf"  ./main.o   
+d:/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o:(.init9+0x0): undefined reference to `main'
+make: *** [Control_ECU.elf] Error 1
+
+18:28:22 Build Finished (took 269ms)
+

@@ -1,0 +1,90 @@
+/*
+ * timer.h
+ *
+ *  Created on: Oct 25, 2021
+ *      Author: LENOVO
+ */
+
+#ifndef TIMER_H_
+#define TIMER_H_
+
+#define TIMER0_ID	0
+#define TIMER1_ID	1
+#define TIMER2_ID	2
+
+
+/* Enum for choosing the Timer Mode
+   --------------------------------
+   0 -> Normal Mode overflow
+   2 -> CTC compare Mode 			*/
+typedef enum
+{
+	OVERFLOW_MODE = 0,
+	COMPARE_MODE = 2
+}TIMER_Mode;
+
+/* Enum for choosing the OC Pin Mode
+   ---------------------------------
+   0 -> Normal port operation, OC0 disconnected.
+   1 -> Toggle OC0 on compare match
+   2 -> Clear OC0 on compare match
+   3 -> Set OC0 on compare match */
+
+typedef enum
+{
+	DISCONNECTED,
+	TOGGLE,
+	CLEAR,
+	SET
+}TIMER_OC_Mode;
+
+/* Enum for to enable of disable the interrupt */
+typedef enum
+{
+	OFF,ON
+}TIMER_Interrupt;
+
+
+/*
+ *  Enum for Choosing the CLK Source & the prescaler
+ */
+typedef enum
+{
+	NO_CLOCK,
+	NO_PRESCALER,
+	PRESCALER8,
+	PRESCALER64,
+	PRESCALER256,
+	PRESCALER1024,
+	EXTERNALFALLINGEDGE,
+	EXTERNALRISINGEDGE
+}TIMER_CLK;
+
+/*
+    The Configuration Struct
+    timer_ID for select the timer
+	TIMER_Mode - for select the timer mode
+	TIMER_OC_Mode - select the oc mode
+	TIMER_CLK - select the timer clk src
+	uint16 inital_value - the initial value of the timer
+	uint16 compare_value - the compare value of the timer
+ */
+typedef struct
+{
+	uint8 timer_id;
+	TIMER_Mode timer_mode = OVERFLOW_MODE;;
+	TIMER_OC_Mode oc_mode = DISCONNECTED;
+	TIMER_CLK timer_clk;
+	TIMER_Interrupt interrupt = OFF;
+	uint16 inital_value = 0;
+	uint16 compare_value = 0;
+}TIMER_Config;
+
+
+/* Functions Prototypes */
+void Timer_Init(TIMER_Config* config);
+void Timer_Deinit();
+void Timer_Stop();
+
+
+#endif /* TIMER_H_ */
