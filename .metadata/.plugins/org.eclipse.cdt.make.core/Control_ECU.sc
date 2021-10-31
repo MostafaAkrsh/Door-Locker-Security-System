@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?scdStore version="2"?><scannerInfo id="org.eclipse.cdt.make.core.discoveredScannerInfo">
-<instance id="de.innot.avreclipse.configuration.app.debug.246802229;de.innot.avreclipse.configuration.app.debug.246802229.;de.innot.avreclipse.tool.compiler.winavr.app.debug.1056839166;de.innot.avreclipse.compiler.winavr.input.1147035211">
+<instance id="de.innot.avreclipse.configuration.app.debug.1701148249;de.innot.avreclipse.configuration.app.debug.1701148249.;de.innot.avreclipse.tool.compiler.winavr.app.debug.1472689265;de.innot.avreclipse.compiler.winavr.input.1684249477">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
 <includePath path="d:\winavr\bin\../lib/gcc/avr/4.3.3/include"/>
 <includePath path="d:\winavr\bin\../lib/gcc/avr/4.3.3/include-fixed"/>
@@ -125,7 +125,7 @@
 <definedSymbol symbol="F_CPU=8000000UL"/>
 </collector>
 </instance>
-<instance id="de.innot.avreclipse.configuration.app.release.272013580;de.innot.avreclipse.configuration.app.release.272013580.;de.innot.avreclipse.tool.compiler.winavr.app.release.1997660080;de.innot.avreclipse.compiler.winavr.input.1324641074">
+<instance id="de.innot.avreclipse.configuration.app.release.1459045837;de.innot.avreclipse.configuration.app.release.1459045837.;de.innot.avreclipse.tool.compiler.winavr.app.release.1641680436;de.innot.avreclipse.compiler.winavr.input.127088411">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
 <includePath path="d:\winavr\bin\../lib/gcc/avr/4.3.3/include"/>
 <includePath path="d:\winavr\bin\../lib/gcc/avr/4.3.3/include-fixed"/>

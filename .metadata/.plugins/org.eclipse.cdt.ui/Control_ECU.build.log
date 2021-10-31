@@ -1,10 +1,34 @@
-18:28:22 **** Incremental Build of configuration Debug for project Control_ECU ****
+20:23:36 **** Incremental Build of configuration Debug for project Control_ECU ****
 make all 
+Building file: ../uart.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=8000000UL -MMD -MP -MF"uart.d" -MT"uart.o" -c -o "uart.o" "../uart.c"
+Finished building: ../uart.c
+ 
 Building target: Control_ECU.elf
 Invoking: AVR C Linker
-avr-gcc -Wl,-Map,Control_ECU.map -mmcu=atmega16 -o "Control_ECU.elf"  ./main.o   
-d:/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o:(.init9+0x0): undefined reference to `main'
-make: *** [Control_ECU.elf] Error 1
+avr-gcc -Wl,-Map,Control_ECU.map -mmcu=atmega16 -o "Control_ECU.elf"  ./gpio.o ./keypad.o ./lcd.o ./main.o ./timer.o ./uart.o   
+Finished building target: Control_ECU.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Control_ECU.elf  >"Control_ECU.lss"
+Finished building: Control_ECU.lss
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega16 Control_ECU.elf
+AVR Memory Usage
+----------------
+Device: atmega16
 
-18:28:22 Build Finished (took 269ms)
+Program:   11524 bytes (70.3% Full)
+(.text + .data + .bootloader)
+
+Data:         26 bytes (2.5% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+20:23:37 Build Finished (took 724ms)
 
