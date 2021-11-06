@@ -163,7 +163,7 @@ LOAD d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x3a78
+.text           0x00000000     0x3a7e
  *(.vectors)
  .vectors       0x00000000       0x54 d:/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
                 0x00000000                __vectors
@@ -304,139 +304,139 @@ LOAD d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x00001526      0x126 ./helpers.o
                 0x00001526                password_not_identical
  .text.main_options
-                0x0000164c      0x22c ./helpers.o
+                0x0000164c      0x232 ./helpers.o
                 0x0000164c                main_options
  .text.enter_saved_password
-                0x00001878      0x184 ./helpers.o
-                0x00001878                enter_saved_password
+                0x0000187e      0x184 ./helpers.o
+                0x0000187e                enter_saved_password
  .text.open_door
-                0x000019fc      0x116 ./helpers.o
-                0x000019fc                open_door
+                0x00001a02      0x116 ./helpers.o
+                0x00001a02                open_door
  .text.ask_to_close
-                0x00001b12       0x4e ./helpers.o
-                0x00001b12                ask_to_close
+                0x00001b18       0x4e ./helpers.o
+                0x00001b18                ask_to_close
  .text.close_door
-                0x00001b60      0x116 ./helpers.o
-                0x00001b60                close_door
+                0x00001b66      0x116 ./helpers.o
+                0x00001b66                close_door
  .text.KEYPAD_getPressedKey
-                0x00001c76       0xa2 ./keypad.o
-                0x00001c76                KEYPAD_getPressedKey
+                0x00001c7c       0xa2 ./keypad.o
+                0x00001c7c                KEYPAD_getPressedKey
  .text.KEYPAD_4x4_adjustKeyNumber
-                0x00001d18      0x150 ./keypad.o
+                0x00001d1e      0x150 ./keypad.o
  .text.LCD_init
-                0x00001e68       0x46 ./lcd.o
-                0x00001e68                LCD_init
+                0x00001e6e       0x46 ./lcd.o
+                0x00001e6e                LCD_init
  .text.LCD_sendCommand
-                0x00001eae      0x3e8 ./lcd.o
-                0x00001eae                LCD_sendCommand
+                0x00001eb4      0x3e8 ./lcd.o
+                0x00001eb4                LCD_sendCommand
  .text.LCD_displayCharacter
-                0x00002296      0x3e8 ./lcd.o
-                0x00002296                LCD_displayCharacter
+                0x0000229c      0x3e8 ./lcd.o
+                0x0000229c                LCD_displayCharacter
  .text.LCD_displayString
-                0x0000267e       0x52 ./lcd.o
-                0x0000267e                LCD_displayString
+                0x00002684       0x52 ./lcd.o
+                0x00002684                LCD_displayString
  .text.LCD_moveCursor
-                0x000026d0       0x84 ./lcd.o
-                0x000026d0                LCD_moveCursor
+                0x000026d6       0x84 ./lcd.o
+                0x000026d6                LCD_moveCursor
  .text.LCD_displayStringRowColumn
-                0x00002754       0x32 ./lcd.o
-                0x00002754                LCD_displayStringRowColumn
+                0x0000275a       0x32 ./lcd.o
+                0x0000275a                LCD_displayStringRowColumn
  .text.LCD_intgerToString
-                0x00002786       0x46 ./lcd.o
-                0x00002786                LCD_intgerToString
+                0x0000278c       0x46 ./lcd.o
+                0x0000278c                LCD_intgerToString
  .text.LCD_clearScreen
-                0x000027cc       0x14 ./lcd.o
-                0x000027cc                LCD_clearScreen
- .text.main     0x000027e0      0x186 ./main.o
-                0x000027e0                main
+                0x000027d2       0x14 ./lcd.o
+                0x000027d2                LCD_clearScreen
+ .text.main     0x000027e6      0x186 ./main.o
+                0x000027e6                main
  .text.__vector_9
-                0x00002966       0x66 ./timer.o
-                0x00002966                __vector_9
+                0x0000296c       0x66 ./timer.o
+                0x0000296c                __vector_9
  .text.__vector_8
-                0x000029cc       0x66 ./timer.o
-                0x000029cc                __vector_8
+                0x000029d2       0x66 ./timer.o
+                0x000029d2                __vector_8
  .text.__vector_4
-                0x00002a32       0x66 ./timer.o
-                0x00002a32                __vector_4
+                0x00002a38       0x66 ./timer.o
+                0x00002a38                __vector_4
  .text.__vector_19
-                0x00002a98       0x66 ./timer.o
-                0x00002a98                __vector_19
+                0x00002a9e       0x66 ./timer.o
+                0x00002a9e                __vector_19
  .text.__vector_6
-                0x00002afe       0x66 ./timer.o
-                0x00002afe                __vector_6
+                0x00002b04       0x66 ./timer.o
+                0x00002b04                __vector_6
  .text.__vector_3
-                0x00002b64       0x66 ./timer.o
-                0x00002b64                __vector_3
+                0x00002b6a       0x66 ./timer.o
+                0x00002b6a                __vector_3
  .text.Timer_Init
-                0x00002bca      0x632 ./timer.o
-                0x00002bca                Timer_Init
+                0x00002bd0      0x632 ./timer.o
+                0x00002bd0                Timer_Init
  .text.Timer_Deinit
-                0x000031fc       0xda ./timer.o
-                0x000031fc                Timer_Deinit
+                0x00003202       0xda ./timer.o
+                0x00003202                Timer_Deinit
  .text.Timer_Stop
-                0x000032d6       0x5c ./timer.o
-                0x000032d6                Timer_Stop
+                0x000032dc       0x5c ./timer.o
+                0x000032dc                Timer_Stop
  .text.Timer_SetCallBack
-                0x00003332      0x104 ./timer.o
-                0x00003332                Timer_SetCallBack
+                0x00003338      0x104 ./timer.o
+                0x00003338                Timer_SetCallBack
  .text.Timer_SetCompareValue
-                0x00003436       0x6a ./timer.o
-                0x00003436                Timer_SetCompareValue
+                0x0000343c       0x6a ./timer.o
+                0x0000343c                Timer_SetCompareValue
  .text.__vector_11
-                0x000034a0       0x66 ./uart.o
-                0x000034a0                __vector_11
+                0x000034a6       0x66 ./uart.o
+                0x000034a6                __vector_11
  .text.__vector_13
-                0x00003506       0x66 ./uart.o
-                0x00003506                __vector_13
+                0x0000350c       0x66 ./uart.o
+                0x0000350c                __vector_13
  .text.__vector_12
-                0x0000356c       0x66 ./uart.o
-                0x0000356c                __vector_12
+                0x00003572       0x66 ./uart.o
+                0x00003572                __vector_12
  .text.UART_init
-                0x000035d2      0x1d0 ./uart.o
-                0x000035d2                UART_init
+                0x000035d8      0x1d0 ./uart.o
+                0x000035d8                UART_init
  .text.UART_sendByte
-                0x000037a2       0x2e ./uart.o
-                0x000037a2                UART_sendByte
+                0x000037a8       0x2e ./uart.o
+                0x000037a8                UART_sendByte
  .text.UART_recieveByte
-                0x000037d0       0x1e ./uart.o
-                0x000037d0                UART_recieveByte
+                0x000037d6       0x1e ./uart.o
+                0x000037d6                UART_recieveByte
  .text.UART_sendString
-                0x000037ee       0x58 ./uart.o
-                0x000037ee                UART_sendString
+                0x000037f4       0x58 ./uart.o
+                0x000037f4                UART_sendString
  .text.UART_receiveString
-                0x00003846       0x86 ./uart.o
-                0x00003846                UART_receiveString
+                0x0000384c       0x86 ./uart.o
+                0x0000384c                UART_receiveString
  .text.UART_RX_SetCallBack
-                0x000038cc       0x24 ./uart.o
-                0x000038cc                UART_RX_SetCallBack
+                0x000038d2       0x24 ./uart.o
+                0x000038d2                UART_RX_SetCallBack
  .text.UART_TX_SetCallBack
-                0x000038f0       0x24 ./uart.o
-                0x000038f0                UART_TX_SetCallBack
+                0x000038f6       0x24 ./uart.o
+                0x000038f6                UART_TX_SetCallBack
  .text.UART_UDRE_SetCallBack
-                0x00003914       0x24 ./uart.o
-                0x00003914                UART_UDRE_SetCallBack
- .text.libgcc   0x00003938       0x44 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
-                0x00003938                __udivmodsi4
- .text.libgcc   0x0000397c        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x0000397c        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text.libgcc   0x0000397c        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text.libgcc   0x0000397c       0x38 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x0000397c                __prologue_saves__
- .text.libgcc   0x000039b4       0x36 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x000039b4                __epilogue_restores__
+                0x0000391a       0x24 ./uart.o
+                0x0000391a                UART_UDRE_SetCallBack
+ .text.libgcc   0x0000393e       0x44 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                0x0000393e                __udivmodsi4
+ .text.libgcc   0x00003982        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00003982        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00003982        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00003982       0x38 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x00003982                __prologue_saves__
+ .text.libgcc   0x000039ba       0x36 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x000039ba                __epilogue_restores__
  .text.avr-libc
-                0x000039ea       0x42 d:/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
-                0x000039ea                itoa
+                0x000039f0       0x42 d:/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
+                0x000039f0                itoa
  .text.avr-libc
-                0x00003a2c       0x20 d:/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
-                0x00003a2c                strrev
- .text.libgcc   0x00003a4c       0x28 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x00003a4c                __udivmodhi4
-                0x00003a74                . = ALIGN (0x2)
+                0x00003a32       0x20 d:/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
+                0x00003a32                strrev
+ .text.libgcc   0x00003a52       0x28 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x00003a52                __udivmodhi4
+                0x00003a7a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00003a74        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x00003a74                exit
-                0x00003a74                _exit
+ .fini9         0x00003a7a        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00003a7a                exit
+                0x00003a7a                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -455,11 +455,11 @@ LOAD d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00003a74        0x4 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x00003a7a        0x4 d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00003a78                _etext = .
+                0x00003a7e                _etext = .
 
-.data           0x00800060       0xd4 load address 0x00003a78
+.data           0x00800060       0xd4 load address 0x00003a7e
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 d:/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
@@ -555,8 +555,8 @@ LOAD d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x0080014b                password2
                 0x00800150                password1
                 0x00800155                PROVIDE (__bss_end, .)
-                0x00003a78                __data_load_start = LOADADDR (.data)
-                0x00003b4c                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00003a7e                __data_load_start = LOADADDR (.data)
+                0x00003b52                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800155        0x0
                 0x00800155                PROVIDE (__noinit_start, .)
@@ -581,20 +581,20 @@ LOAD d:/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x387c
+.stab           0x00000000     0x3888
  *(.stab)
  .stab          0x00000000      0x870 ./gpio.o
- .stab          0x00000870      0xe7c ./helpers.o
-                               0x1104 (size before relaxing)
- .stab          0x000016ec      0x330 ./keypad.o
+ .stab          0x00000870      0xe88 ./helpers.o
+                               0x1110 (size before relaxing)
+ .stab          0x000016f8      0x330 ./keypad.o
                                 0x408 (size before relaxing)
- .stab          0x00001a1c      0xa50 ./lcd.o
+ .stab          0x00001a28      0xa50 ./lcd.o
                                 0xca8 (size before relaxing)
- .stab          0x0000246c      0x480 ./main.o
+ .stab          0x00002478      0x480 ./main.o
                                 0x804 (size before relaxing)
- .stab          0x000028ec      0x9c0 ./timer.o
+ .stab          0x000028f8      0x9c0 ./timer.o
                                 0xc6c (size before relaxing)
- .stab          0x000032ac      0x5d0 ./uart.o
+ .stab          0x000032b8      0x5d0 ./uart.o
                                 0x87c (size before relaxing)
 
 .stabstr        0x00000000     0x15f5

@@ -108,7 +108,6 @@ Option main_options(void)
 		}
 		if( key == '-' )
 		{
-			UART_sendByte('-');
 			 _delay_ms(500); /* Press time */
 			return CHANGEPW;
 			break;

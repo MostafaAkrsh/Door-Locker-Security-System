@@ -69,6 +69,8 @@ int main() {
 				state = CHECK_PASSWORD;
 				break;
 			case '-':
+				UART_sendByte('=');
+
 				key = UART_recieveByte();
 				LCD_displayString("ok");
 				if (key == '!') {
