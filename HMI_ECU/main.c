@@ -4,8 +4,14 @@ uint8 password1[PASS_SIZE];
 uint8 password2[PASS_SIZE];
 uint8 passwordCheck[PASS_SIZE];
 
-int main()
-{
+uint8 g_tick = 0;
+
+/* Call back functions to count seconds */
+volatile void clock() {
+	g_tick++;
+}
+
+int main() {
 	/* Configure Timer1 to make interrupt every 1 SEC
 	 * timer_frequency = ECU_Frequency / Prescaler
 	 * 				   = 8M/256 = 31250
@@ -25,7 +31,8 @@ int main()
 
 	Timer_Init(&config);
 
-	Timer_SetCallBack(TIMER1_ID,ledony,COMPARE_MODE);
+	/* set the callback function */
+	Timer_SetCallBack(TIMER1_ID, clock, COMPARE_MODE);
 
 	/********************** Modules Initialization ************************/
 
@@ -45,81 +52,86 @@ int main()
 
 	UART_init(&uconfig);
 
-
 	/* LCD Initialization */
 	LCD_init();
 
-
 	/* Enable The global Interrupt */
-	SREG |= (1<<7);
+	SREG |= (1 << 7);
 	uint8 key;
 
+	/* State Machine */
 	State state = CHANGE_PW_STATE;
+
 	uint8 no_of_trials = 0;
-	  while(1)
-	    {
-		  switch(state)
-		  {
-		  case CHANGE_PW_STATE:
-			  enter_password();
-			  uint8 iscorrect = reenter_password();
-			  if(iscorrect == YES)
-				  {
-				  state = OPTIONS_STATE;
-				  }
-			  else
-			  {
-			   password_not_identical();
-			  }
-			  break;
-		  case OPTIONS_STATE:
-			  key++; 		/* any trivial instruction due I can't initialize any thing in the fist line of case block */
-			  Option option = main_options();
-			  if(option == CHANGEPW)
-				  {
-				  state = CHANGE_PW_STATE;
-				  }
-			  else if(option == OPENDOOR)
-			  {
-				  state = ENTER_PW_STATE;
-			  }
-			  break;
+	while (1) {
+		switch (state) {
+		/*********************** CHANGE_PW_STATE ************************/
+		case CHANGE_PW_STATE:
+			enter_password();
+			uint8 iscorrect = reenter_password();
+			if (iscorrect == YES) {
+				/* if two inputs are identical goto options menu */
+				state = OPTIONS_STATE;
+			} else {
+				/* not identical return to the same state */
+				password_not_identical();
+			}
+			break;
 
-		  case ENTER_PW_STATE:
-			  if(enter_saved_password())
-			  {
-				  state = OPEN_DOOR_STATE;
-				  no_of_trials = 0;
-			  }
-			  else if (no_of_trials >= 2)
-			  {
-				  state = THIEF_STATE;
-			  }
-			  else
-			  {
-				  LCD_displayString("THEIF");
+			/*********************** OPTIONS_STATE ************************/
+		case OPTIONS_STATE:
+			key++; /* any trivial instruction due I can't initialize any thing in the fist line of case block */
 
-				  no_of_trials++;
-			  }
-			  break;
+			/* Display Meun */
+			Option option = main_options();
 
-		  case OPEN_DOOR_STATE:
-			  open_door();
-			  state = CLOSE_DOOR_STATE;
-			  break;
+			if (option == CHANGEPW) {
+				state = CHANGE_PW_STATE;
+			} else if (option == OPENDOOR) {
+				state = ENTER_PW_STATE;
+			}
+			break;
 
-		  case CLOSE_DOOR_STATE:
-			  key++;
-		  	  uint8 close = ask_to_close();
-		  	  if(close == YES) close_door();
-		  	  //wait
-		  	  state = OPTIONS_STATE;
-		  break;
+			/*********************** ENTER_PW_STATE ************************/
+		case ENTER_PW_STATE:
+			if (enter_saved_password()) {
+				state = OPEN_DOOR_STATE;
+				no_of_trials = 0;
+			} else if (no_of_trials >= 2) { /* If number of trials > 3 goto theif state*/
+				state = THIEF_STATE;
+			} else {
+				no_of_trials++;
+			}
+			break;
 
-		  case THIEF_STATE:
-			  LCD_displayString("THEIF");
-				UART_sendByte('0');
-			  break;
-		  }
-	    }
+			/*********************** OPEN_DOOR_STATE ************************/
+		case OPEN_DOOR_STATE:
+			open_door();
+			state = CLOSE_DOOR_STATE;
+			break;
+
+			/*********************** CLOSE_DOOR_STATE ************************/
+		case CLOSE_DOOR_STATE:
+			key++;
+			uint8 close = ask_to_close();
+			if (close == YES) {
+				close_door();
+				state = OPTIONS_STATE;
+			}
+			break;
+
+			/*********************** THIEF_STATE ************************/
+		case THIEF_STATE:
+			LCD_clearScreen();
+			LCD_displayString("THEIF");
+			UART_sendByte('0');
+			g_tick = 0;
+			/* wait for 1 minute */
+			while (g_tick < 60)
+				;
+			UART_sendByte('1'); /* send to controller ecu that the 1 minute is end */
+			state = OPTIONS_STATE;
+			break;
+		}
+	}
 }

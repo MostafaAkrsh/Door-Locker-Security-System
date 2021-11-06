@@ -14,15 +14,18 @@
 
 /* Steps to control the flow of the system */
 typedef enum {
-	CHANGE_PW_STATE,OPTIONS_STATE,OPEN_DOOR_STATE,CLOSE_DOOR_STATE,ENTER_PW_STATE,THIEF_STATE
-}State;
+	CHANGE_PW_STATE,
+	OPTIONS_STATE,
+	OPEN_DOOR_STATE,
+	CLOSE_DOOR_STATE,
+	ENTER_PW_STATE,
+	THIEF_STATE
+} State;
 
 typedef enum {
-	OPENDOOR,CHANGEPW
-}Option;
+	OPENDOOR, CHANGEPW
+} Option;
 
-/* Call back functions definitions */
-volatile void ledony();
 
 /********** Functions Definitions ***********/
 /*function to check the two passwords are identical or no*/
@@ -56,6 +59,5 @@ void password_incorrect(void);
 
 /* display on the lcd that the passwords are not the same  */
 void password_not_identical(void);
-
 
 #endif // HELPERS_H

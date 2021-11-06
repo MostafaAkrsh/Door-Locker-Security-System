@@ -7,6 +7,7 @@
 
 #include "helpers.h"
 
+/* function to check the if the two passwords are identical or not */
 uint8 check_identical(uint8* pass1, uint8* pass2)
 {
 	int pass_index;
@@ -20,3 +21,5 @@ uint8 check_identical(uint8* pass1, uint8* pass2)
 
 	return 1;
 }
+
+

@@ -88,22 +88,24 @@ uint8 EEPROM_readByte(uint16 u16addr, uint8 *u8data)
     return SUCCESS;
 }
 
-void EEPROM_writeString(uint8* password , uint8 pass_size)
+/* Extend the EEPROM to make it able to write a string */
+void EEPROM_writeString(uint8* string , uint8 size)
 {
 	uint8 i = 0;
-	for (i = 0; i < pass_size; i++) {
+	for (i = 0; i < size; i++) {
 		/* write in UART */
-		EEPROM_writeByte( (0x0050 + i), password[i] );
+		EEPROM_writeByte( (0x0050 + i), string[i] );
 		_delay_ms(150);
 	}
 }
 
-void EEPROM_readString(uint8* password , uint8 pass_size)
+/* Extend the EEPROM to make it able to read a string */
+void EEPROM_readString(uint8* string , uint8 size)
 {
 	uint8 i = 0;
-	for ( i = 0; i < pass_size; i++)
+	for ( i = 0; i < size; i++)
 		{
-		EEPROM_readByte( (0x0050 + i), &(password[i]));
+		EEPROM_readByte( (0x0050 + i), &(string[i]));
 		_delay_ms(150);
 		}
 }

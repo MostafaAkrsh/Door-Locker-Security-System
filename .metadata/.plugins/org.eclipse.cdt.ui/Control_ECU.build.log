@@ -1,39 +1,20 @@
-15:25:16 **** Incremental Build of configuration Debug for project CONTROL_ECU ****
+19:43:51 **** Incremental Build of configuration Debug for project CONTROL_ECU ****
 make all 
-Building file: ../main.c
-Invoking: AVR Compiler
-avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega16 -DF_CPU=8000000UL -MMD -MP -MF"main.d" -MT"main.o" -c -o "main.o" "../main.c"
-In file included from ../helpers.h:17,
-                 from ../main.c:1:
-d:/winavr/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
-../main.c: In function 'main':
-../main.c:58: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
-Finished building: ../main.c
- 
-Building target: CONTROL_ECU.elf
-Invoking: AVR C Linker
-avr-gcc -Wl,-Map,CONTROL_ECU.map -mmcu=atmega16 -o "CONTROL_ECU.elf"  ./buzzer.o ./dcmotor.o ./external_eeprom.o ./gpio.o ./helperfunctions.o ./helpers.o ./lcd.o ./main.o ./pwm.o ./timer.o ./twi.o ./uart.o   
-Finished building target: CONTROL_ECU.elf
- 
-Invoking: AVR Create Extended Listing
-avr-objdump -h -S CONTROL_ECU.elf  >"CONTROL_ECU.lss"
-Finished building: CONTROL_ECU.lss
- 
 Invoking: Print Size
 avr-size --format=avr --mcu=atmega16 CONTROL_ECU.elf
 AVR Memory Usage
 ----------------
 Device: atmega16
 
-Program:   15068 bytes (92.0% Full)
+Program:   14952 bytes (91.3% Full)
 (.text + .data + .bootloader)
 
-Data:        355 bytes (34.7% Full)
+Data:        312 bytes (30.5% Full)
 (.data + .bss + .noinit)
 
 
 Finished building: sizedummy
  
 
-15:25:17 Build Finished (took 672ms)
+19:43:52 Build Finished (took 485ms)
 

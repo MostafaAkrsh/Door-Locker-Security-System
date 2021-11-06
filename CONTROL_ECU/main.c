@@ -7,9 +7,47 @@ uint8 EE[PASS_SIZE];
 
 uint8 key;
 
+uint8 g_tick = 0;
+
+/* Call Back Functions */
+void volatile clock() {
+	g_tick++;
+
+	/* USED FOR DEBUGGING
+	 *  display the g_tick value
+	LCD_intgerToString(g_tick);
+	*/
+}
+
 int main() {
+
+	/* Configure Timer1 to make interrupt every 1 SEC
+	 * timer_frequency = ECU_Frequency / Prescaler
+	 * 				   = 8M/256 = 31250
+	 * clock time = 	1/timer_frequency
+	 * 			  = 	1/31250
+	 * compare value =  ( timer_required ) / ( clock_time )
+	 * 				 = 1/(1/31250) = 31250*/
+
+	TIMER_Config config;
+
+	config.timer_id = TIMER1_ID;
+	config.timer_mode = COMPARE_MODE;
+	config.timer_clk = PRESCALER256;
+	config.oc_mode = DISABLED;
+	config.interrupt = ON;
+	config.inital_value = 0;
+	config.compare_value = 31250;
+
+	Timer_Init(&config);
+
+	/* Set the callback function */
+	Timer_SetCallBack(TIMER1_ID, clock, COMPARE_MODE);
+
+	/* Used for debugging
 	LCD_init();
-	LCD_displayString("meme");
+	LCD_displayString("me1");
+	 */
 
 	/* Buzzer Initialization */
 	Buzzer_init(PORTB_ID, PIN0_ID);
@@ -36,94 +74,109 @@ int main() {
 
 	UART_init(&uconfig);
 
-	LCD_displayString("meme");
+	/* Used for debugging
+	LCD_displayString("me2");
+	*/
 
-	//Buzzer_ON();
-	//DcMotor_Rotate(CW,10);
+	/* Enable the global interrupt */
+	SREG |= (1 << 7);
+
+	/* the first state is Idle */
 	State state = IDLE;
 
+	/* Finite State Machine */
 	while (1) {
 		switch (state) {
+		/************************* IDLE STATE **************************/
 		case IDLE:
 			key = UART_recieveByte();
-			LCD_displayString("ok");
 			if (key == '!') {
 				state = SAVE_PASSWORD;
-				LCD_displayString("go to save");
 			}
 			break;
+		/************************* SAVE_PASSWORD STATE **************************/
 		case SAVE_PASSWORD:
 			UART_sendByte('!');
+			/* Send password in EEPORM */
 			UART_receiveString(g_pass);
-			LCD_displayString(g_pass);
 			EEPROM_writeString(g_pass, PASS_SIZE);
-			LCD_displayString("written");
 			state = OPTIONS;
 			break;
-
+			/************************* OPTIONS STATE **************************/
 		case OPTIONS:
 			key = UART_recieveByte();
-
 			switch (key) {
 			case '+':
 				state = CHECK_PASSWORD;
 				break;
 			case '-':
 				key = UART_recieveByte();
-				LCD_displayString("ok");
 				if (key == '!') {
 					state = SAVE_PASSWORD;
-					LCD_displayString("go to save");
 				}
-				state = SAVE_PASSWORD;
-
 				break;
 			case '0':
 				state = THIEF;
 				break;
 			}
 			break;
-
+			/************************* CHECK_PASSWORD STATE **************************/
 		case CHECK_PASSWORD:
-			LCD_displayCharacter(key);
-
 			UART_sendByte('!');
 			UART_receiveString(g_pass);
 			EEPROM_readString(EEPROM_pass, PASS_SIZE);
-			LCD_moveCursor(1, 0);
-
+			/* Compare the EEPROM password and the input password */
 			if (check_identical(EE, g_pass)) {
-				LCD_displayString("identical");
-
-				state = OPEN_DOOR;
+				state = OPEN_DOOR;	/* if identical open the door */
 			} else {
 				key = UART_recieveByte();
 				if (key == '+') {
 					UART_sendByte('X');
 				}
-				LCD_displayString("not");
-				state = OPTIONS;
+				state = OPTIONS; /* return in Options state */
 			}
 			break;
+
+			/************************* OPEN_DOOR STATE **************************/
+
 		case OPEN_DOOR:
 			key = UART_recieveByte();
 			if (key == '+')
 				UART_sendByte('+');
-			DcMotor_Rotate(CW, 100);
+			DcMotor_Rotate(CW, 100); /* open the door by rotating the motor clock wise */
+			g_tick = 0;
+			while (g_tick <= 15) /* Wait for 15 seconds */
+				;
+			DcMotor_Rotate(CW, 0); /* Stop rotating */
+			UART_sendByte('/');
 			state = CLOSE_DOOR;
 			break;
+
+			/************************* CLOSE_DOOR STATE **************************/
+
 		case CLOSE_DOOR:
 			key = UART_recieveByte();
 			if (key == '+')
-				DcMotor_Rotate(A_CW, 100);
+				DcMotor_Rotate(A_CW, 100); /* close the door by rotating the motor clock wise */
+			g_tick = 0;
+			while (g_tick <= 15) /* Wait for 15 seconds */
+				;
+			DcMotor_Rotate(A_CW, 0); /* Stop rotating */
+			UART_sendByte('/');
 			state = OPTIONS;
 			break;
+
+			/************************* THIEF STATE **************************/
+
 		case THIEF:
-			LCD_displayString("ttt");
-			Buzzer_ON();
-			_delay_ms(100);
-			Buzzer_OFF();
-			_delay_ms(100);
+			Buzzer_ON(); /* Turn on the Buzzer */
+
+			key = UART_recieveByte();
+			/* if the minutes is elapsed turn off the buzzer and return to options menu */
+			if (key == '1') {
+				Buzzer_OFF();
+				state = OPTIONS;
+			}
 			break;
 
 		}
