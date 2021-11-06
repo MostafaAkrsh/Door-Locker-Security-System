@@ -63,8 +63,14 @@ uint8 reenter_password(void)
 
 	if(identical)
 	{
+		LCD_displayCharacter('1');
+
 		UART_sendByte('!');
+		LCD_displayCharacter('2');
+
 		uint8 key = UART_recieveByte();
+		LCD_displayCharacter('3');
+
 		if(key == '!')
 		UART_sendString(password1);
 	}
@@ -138,7 +144,6 @@ uint8 enter_saved_password(void)
 
 	if(key == '+')
 	{
-		LCD_displayCharacter('V');
 		return 1;
 	}
 
@@ -156,11 +161,22 @@ void open_door(void)
 uint8 ask_to_close(void)
 {
 	LCD_clearScreen();
-	LCD_displayString("ASK Door");
-	_delay_ms(2000); /* Press time */
+	LCD_displayString("Door is open");
+	LCD_moveCursor(1,0);
+	LCD_displayString("Click + to close it");
 
+	uint8 key = 0;
 
+	key = KEYPAD_getPressedKey();
+	if(key == '+'){
+	UART_sendByte('+');
 	return 1;
+	}
+	else
+	{
+		return 0;
+	}
+
 }
 void close_door(void)
 {

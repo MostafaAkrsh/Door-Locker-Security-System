@@ -1,4 +1,4 @@
-22:31:36 **** Incremental Build of configuration Debug for project CONTROL_ECU ****
+15:11:51 **** Incremental Build of configuration Debug for project CONTROL_ECU ****
 make all 
 Building file: ../main.c
 Invoking: AVR Compiler
@@ -7,8 +7,7 @@ In file included from ../helpers.h:17,
                  from ../main.c:1:
 d:/winavr/lib/gcc/../../avr/include/util/delay.h:90:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
 ../main.c: In function 'main':
-../main.c:63: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
-../main.c:50: warning: enumeration value 'OPTIONS' not handled in switch
+../main.c:58: warning: pointer targets in passing argument 1 of 'LCD_displayString' differ in signedness
 Finished building: ../main.c
  
 Building target: CONTROL_ECU.elf
@@ -26,15 +25,15 @@ AVR Memory Usage
 ----------------
 Device: atmega16
 
-Program:   14918 bytes (91.1% Full)
+Program:   15074 bytes (92.0% Full)
 (.text + .data + .bootloader)
 
-Data:        341 bytes (33.3% Full)
+Data:        355 bytes (34.7% Full)
 (.data + .bss + .noinit)
 
 
 Finished building: sizedummy
  
 
-22:31:36 Build Finished (took 618ms)
+15:11:52 Build Finished (took 674ms)
 

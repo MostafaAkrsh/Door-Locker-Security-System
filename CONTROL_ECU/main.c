@@ -1,24 +1,21 @@
 #include "helpers.h"
 
-
 uint8 g_pass[PASS_SIZE];
-
 
 uint8 EEPROM_pass[PASS_SIZE];
 uint8 EE[PASS_SIZE];
 
 uint8 key;
 
-int main()
-{
+int main() {
 	LCD_init();
 	LCD_displayString("meme");
 
 	/* Buzzer Initialization */
-	Buzzer_init(PORTB_ID ,PIN0_ID);
+	Buzzer_init(PORTB_ID, PIN0_ID);
 
 	/* Motor Initialization */
-	DcMotor_Init(PORTB_ID,PIN5_ID,PIN4_ID);
+	DcMotor_Init(PORTB_ID, PIN5_ID, PIN4_ID);
 
 	/* EEPROM Init */
 	EEPROM_init();
@@ -45,80 +42,93 @@ int main()
 	//DcMotor_Rotate(CW,10);
 	State state = IDLE;
 
-	while(1)
-	{
-		switch(state)
-			{
-			case IDLE:
-				key = UART_recieveByte();
-				if( key=='!' )
-				{
-					LCD_clearScreen();
-					state = SAVE_PASSWORD;
-				}
+	while (1) {
+		switch (state) {
+		case IDLE:
+			key = UART_recieveByte();
+			LCD_displayString("ok");
+			if (key == '!') {
+				state = SAVE_PASSWORD;
+				LCD_displayString("go to save");
+			}
 			break;
-			case SAVE_PASSWORD:
-				UART_sendByte('!');
-				UART_receiveString(g_pass);
-				LCD_displayString(g_pass);
-				EEPROM_writeString(g_pass, PASS_SIZE);
-				LCD_displayString("written");
-				state = CHECK_PASSWORD;
+		case SAVE_PASSWORD:
+			UART_sendByte('!');
+			UART_receiveString(g_pass);
+			LCD_displayString(g_pass);
+			EEPROM_writeString(g_pass, PASS_SIZE);
+			LCD_displayString("written");
+			state = OPTIONS;
+			break;
 
+		case OPTIONS:
+			key = UART_recieveByte();
+
+			switch (key) {
+			case '+':
+				state = CHECK_PASSWORD;
 				break;
-			case CHECK_PASSWORD:
-				LCD_clearScreen();
+			case '-':
+				UART_sendByte('=');
 
 				key = UART_recieveByte();
-				LCD_displayCharacter(key);
-				if(key == '0')
-				{
-					state = THIEF;
-					break;
+				LCD_displayString("ok");
+				if (key == '!') {
+					state = SAVE_PASSWORD;
+					LCD_displayString("go to save");
 				}
+				state = SAVE_PASSWORD;
 
-				if(key == '+'){
-				UART_sendByte('!');
+				break;
+			case '0':
+				state = THIEF;
+				break;
+			}
+			break;
 
-				UART_receiveString(g_pass);
-				EEPROM_readString(EEPROM_pass, PASS_SIZE);
-				LCD_moveCursor(1,0);
+		case CHECK_PASSWORD:
+			LCD_displayCharacter(key);
 
-				if(check_identical(EE,g_pass))
-				{
-					LCD_displayString("identical");
+			UART_sendByte('!');
+			UART_receiveString(g_pass);
+			EEPROM_readString(EEPROM_pass, PASS_SIZE);
+			LCD_moveCursor(1, 0);
 
-					state = OPEN_DOOR;
-				}
-				else
-				{
-					key = UART_recieveByte();
-					if(key == '+')
-					{
+			if (check_identical(EE, g_pass)) {
+				LCD_displayString("identical");
+
+				state = OPEN_DOOR;
+			} else {
+				key = UART_recieveByte();
+				if (key == '+') {
 					UART_sendByte('X');
-					}
-					LCD_displayString("not");
 				}
-				}
-				break;
-			case OPEN_DOOR:
-
-				key = UART_recieveByte();
-				if(key == '+')
+				LCD_displayString("not");
+				state = OPTIONS;
+			}
+			break;
+		case OPEN_DOOR:
+			key = UART_recieveByte();
+			if (key == '+')
 				UART_sendByte('+');
-				state = CHECK_PASSWORD;
-				break;
-			case CLOSE_DOOR:
-				break;
-			case THIEF:
-				LCD_displayString("ttt");
-				Buzzer_ON();
-				_delay_ms(100);
-				Buzzer_OFF();
-				_delay_ms(100);
-				break;
+			DcMotor_Rotate(CW, 100);
+			state = CLOSE_DOOR;
+			break;
+		case CLOSE_DOOR:
+			key = UART_recieveByte();
+			if (key == '+')
+				DcMotor_Rotate(A_CW, 100);
+			state = OPTIONS;
+			break;
+		case THIEF:
+			LCD_displayString("ttt");
+			Buzzer_ON();
+			_delay_ms(100);
+			Buzzer_OFF();
+			_delay_ms(100);
+			break;
 
-	}
+		}
 
 	}
 }

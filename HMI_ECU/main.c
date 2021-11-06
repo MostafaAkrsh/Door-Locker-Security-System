@@ -89,6 +89,7 @@ int main()
 			  if(enter_saved_password())
 			  {
 				  state = OPEN_DOOR_STATE;
+				  no_of_trials = 0;
 			  }
 			  else if (no_of_trials >= 2)
 			  {
@@ -104,7 +105,6 @@ int main()
 
 		  case OPEN_DOOR_STATE:
 			  open_door();
-			  //wait
 			  state = CLOSE_DOOR_STATE;
 			  break;
 
