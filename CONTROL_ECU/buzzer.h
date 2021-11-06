@@ -1,9 +1,3 @@
-/*
- * buzzer.h
- *
- *  Created on: Oct 31, 2021
- *      Author: LENOVO
- */
 
 #ifndef BUZZER_H_
 #define BUZZER_H_

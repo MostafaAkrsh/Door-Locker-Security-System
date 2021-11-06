@@ -1,10 +1,3 @@
-/*
- * helperfunctions.cpp
- *
- *  Created on: Nov 1, 2021
- *      Author: LENOVO
- */
-
 #include "helperfunctions.h"
 
 /* function to calculate the power */

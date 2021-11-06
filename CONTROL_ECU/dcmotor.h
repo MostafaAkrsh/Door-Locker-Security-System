@@ -1,9 +1,3 @@
-/*
- * dcmotor.h
- *
- *  Created on: Oct 11, 2021
- *      Author: LENOVO
- */
 
 #ifndef DCMOTOR_H_
 #define DCMOTOR_H_

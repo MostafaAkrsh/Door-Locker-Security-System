@@ -1,11 +1,3 @@
-/*
- * helperfunctions.h
- *
- *	contains math helper functions
- *
- *  Created on: Nov 1, 2021
- *      Author: LENOVO
- */
 
 #ifndef HELPERFUNCTIONS_H_
 #define HELPERFUNCTIONS_H_

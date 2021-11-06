@@ -1,14 +1,4 @@
- /******************************************************************************
- *
- * Module: KEYPAD
- *
- * File Name: keypad.c
- *
- * Description: Source file for the Keypad driver
- *
- * Author: Mohamed Tarek
- *
- *******************************************************************************/
+
 #include "keypad.h"
 #include "gpio.h"
 

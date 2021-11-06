@@ -1,9 +1,3 @@
-/*
- * pwm.h
- *
- *  Created on: Oct 11, 2021
- *      Author: LENOVO
- */
 
 #ifndef PWM_H_
 #define PWM_H_

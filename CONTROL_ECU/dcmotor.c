@@ -1,9 +1,3 @@
-/*
- * dcmotor.cpp
- *
- *  Created on: Oct 11, 2021
- *      Author: LENOVO
- */
 
 #include "dcmotor.h"
 #include "gpio.h"

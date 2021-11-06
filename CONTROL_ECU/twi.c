@@ -1,15 +1,4 @@
- /******************************************************************************
- *
- * Module: TWI(I2C)
- *
- * File Name: twi.h
- *
- * Description: Source file for the TWI(I2C) AVR driver
- *
- * Author: Mohamed Tarek
- *
- *******************************************************************************/
- 
+
 #include "twi.h"
 
 #include "common_macros.h"

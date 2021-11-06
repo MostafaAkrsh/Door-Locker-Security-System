@@ -1,14 +1,3 @@
- /******************************************************************************
- *
- * Module: KEYPAD
- *
- * File Name: keypad.h
- *
- * Description: Header file for the Keypad driver
- *
- * Author: Mohamed Tarek
- *
- *******************************************************************************/
 
 #ifndef KEYPAD_H_
 #define KEYPAD_H_

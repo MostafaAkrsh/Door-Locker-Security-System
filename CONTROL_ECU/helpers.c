@@ -1,9 +1,3 @@
-/*
- * helpers.c
- *
- *  Created on: Nov 4, 2021
- *      Author: LENOVO
- */
 
 #include "helpers.h"
 

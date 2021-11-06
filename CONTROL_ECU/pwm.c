@@ -1,9 +1,3 @@
-/*
- * pwm.cpp
- *
- *  Created on: Oct 11, 2021
- *      Author: LENOVO
- */
 
 #include "pwm.h"
 #include "avr/io.h"

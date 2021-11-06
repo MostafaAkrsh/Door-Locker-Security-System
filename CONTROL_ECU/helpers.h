@@ -1,9 +1,3 @@
-/*
- * helpers.h
- *
- *  Created on: Nov 4, 2021
- *      Author: LENOVO
- */
 
 #ifndef HELPERS_H_
 #define HELPERS_H_

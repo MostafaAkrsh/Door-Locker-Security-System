@@ -1,9 +1,4 @@
-/*
- * timer.c
- *
- *  Created on: Oct 25, 2021
- *      Author: Mostafa Samir
- */
+
 #include "timer.h"
 #include "common_macros.h"
 #include "avr/io.h"

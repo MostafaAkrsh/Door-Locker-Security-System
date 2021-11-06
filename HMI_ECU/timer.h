@@ -1,9 +1,3 @@
-/*
- * timer.h
- *
- *  Created on: Oct 25, 2021
- *      Author: Mostfa Samir
- */
 
 #ifndef TIMER_H_
 #define TIMER_H_
