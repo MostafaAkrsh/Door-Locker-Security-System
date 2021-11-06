@@ -1,0 +1,51 @@
+#ifndef HELPERS_H
+#define HELPERS_H
+
+#include "timer.h"
+#include "avr/io.h"
+#include "lcd.h"
+#include "keypad.h"
+#include "gpio.h"
+#include "std_types.h"
+#include "uart.h"
+#include "util/delay.h"
+
+#define PASS_SIZE 5
+
+/* Steps to control the flow of the system */
+typedef enum {
+	STEP1,STEP2,STEP3,STEP4
+}Step;
+
+typedef enum {
+	OPENDOOR,CHANGEPW
+}Option;
+
+/* Call back functions definitions */
+volatile void ledony();
+
+/********** Functions Definitions ***********/
+/*function to check the two passwords are identical or no*/
+uint8 check_identical(uint8* pass1, uint8* pass2);
+
+/* function to make the user chooses the password */
+void enter_password(void);
+/* function to make the user reenter the password to make sure that he entered it as he intended */
+uint8 reenter_password(void);
+/* function to display the options list *
+ * + Open Door                          *
+ * - Change Password                    */
+Option main_options(void);
+/* function to run the motor to open the door */
+void open_door(void);
+/* ask the user wheather he wants to close the door */
+uint8 ask_to_close(void);
+/* run the motor a-cw to close the door */
+void close_door(void);
+/* display on the lcd that the password is not correct */
+void password_incorrect(void);
+/* display on the lcd that the passwords are not the same  */
+void password_not_identical(void);
+
+
+#endif HELPERS_H

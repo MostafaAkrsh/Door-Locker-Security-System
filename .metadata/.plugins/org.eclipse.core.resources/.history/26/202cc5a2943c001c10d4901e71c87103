@@ -1,0 +1,42 @@
+#ifndef HELPERS_H
+#define HELPERS_H
+
+#include "timer.h"
+#include "avr/io.h"
+#include "lcd.h"
+#include "keypad.h"
+#include "gpio.h"
+#include "std_types.h"
+#include "uart.h"
+#include "util/delay.h"
+
+/* Steps to control the flow of the system */
+typedef enum {
+	STEP1,STEP2,STEP3,STEP4
+}Step;
+
+typedef enum {
+	CHANGEPW,OPENDOOR
+}Option;
+
+/* Call back functions definitions */
+
+
+/********** Functions Definitions ***********/
+
+/* function to make the user chooses the password */
+void enter_password(void);
+/* function to make the user reenter the password to make sure that he entered it as he intended */
+void reenter_password(void);
+/* function to display the options list *
+ * + Open Door                          *
+ * - Change Password                    */
+void main_options(void);
+/* function to run the motor to open the door */
+void open_door(void);
+/* ask the user wheather he wants to close the door */
+void ask_to_close(void);
+/* run the motor a-cw to close the door */
+void close_door(void);
+
+#endif HELPERS_H

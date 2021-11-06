@@ -1,0 +1,27 @@
+#include "timer.h"
+#include "avr/io.h"
+#include "lcd.h"
+#include "keypad.h"
+#include "gpio.h"
+#include "std_types.h"
+#include "uart.h"
+#include "util/delay.h"
+
+/* Call Back Functions */
+volatile void ledony()
+{
+	//LCD_intgerToString(000);
+}
+
+/* Steps to control the flow of the system */
+typedef enum {
+	STEP1,STEP2,STEP3,STEP4
+}Step;
+
+typedef enum {
+	CHANGEPW,OPENDOOR
+}Option;
+
+/* Functions Definitions */
+void enter_password(void);
+void reenter_password(void);

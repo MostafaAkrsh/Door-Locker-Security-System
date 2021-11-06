@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../gpio.c \
+../helpers.c \
 ../keypad.c \
 ../lcd.c \
 ../main.c \
@@ -13,6 +14,7 @@ C_SRCS += \
 
 OBJS += \
 ./gpio.o \
+./helpers.o \
 ./keypad.o \
 ./lcd.o \
 ./main.o \
@@ -21,6 +23,7 @@ OBJS += \
 
 C_DEPS += \
 ./gpio.d \
+./helpers.d \
 ./keypad.d \
 ./lcd.d \
 ./main.d \

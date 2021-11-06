@@ -1,0 +1,428 @@
+/*
+ * timer.c
+ *
+ *  Created on: Oct 25, 2021
+ *      Author: Mostafa Samir
+ */
+#include "timer.h"
+#include "common_macros.h"
+#include "avr/io.h"
+
+#include <avr/interrupt.h>
+
+/* Global variables to hold the address of the call back function */
+static volatile void (*g_callBackPtr_timer0_OVF)(void) = NULL_PTR;
+static volatile void (*g_callBackPtr_timer1_OVF)(void) = NULL_PTR;
+static volatile void (*g_callBackPtr_timer2_OVF)(void) = NULL_PTR;
+static volatile void (*g_callBackPtr_timer0_COMP)(void) = NULL_PTR;
+static volatile void (*g_callBackPtr_timer1_COMP)(void) = NULL_PTR;
+static volatile void (*g_callBackPtr_timer2_COMP)(void) = NULL_PTR;
+
+/* Interrupt Service Routine for TIMER0 Overflow Mode */
+ISR(TIMER0_OVF_vect)
+{
+	if(g_callBackPtr_timer0_OVF != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*g_callBackPtr_timer0_OVF)(); /* another method to call the function using pointer to function g_callBackPtr(); */
+	}
+}
+
+/* Interrupt Service Routine for TIMER1 Overflow Mode */
+ISR(TIMER1_OVF_vect)
+{
+	if(g_callBackPtr_timer1_OVF != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*g_callBackPtr_timer1_OVF)(); /* another method to call the function using pointer to function g_callBackPtr(); */
+	}
+}
+
+/* Interrupt Service Routine for TIMER2 Overflow Mode */
+ISR(TIMER2_OVF_vect)
+{
+	if(g_callBackPtr_timer2_OVF != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*g_callBackPtr_timer2_OVF)(); /* another method to call the function using pointer to function g_callBackPtr(); */
+	}
+}
+/* Interrupt Service Routine for TIMER0 Overflow Mode */
+ISR(TIMER0_COMP_vect)
+{
+	if(g_callBackPtr_timer0_COMP != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*g_callBackPtr_timer0_COMP)(); /* another method to call the function using pointer to function g_callBackPtr(); */
+	}
+}
+
+/* Interrupt Service Routine for TIMER1 Overflow Mode */
+ISR(TIMER1_COMPA_vect)
+{
+	if(g_callBackPtr_timer1_COMP != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*g_callBackPtr_timer1_COMP)(); /* another method to call the function using pointer to function g_callBackPtr(); */
+	}
+}
+
+/* Interrupt Service Routine for TIMER2 Overflow Mode */
+ISR(TIMER2_COMP_vect)
+{
+	if(g_callBackPtr_timer2_COMP != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*g_callBackPtr_timer2_COMP)(); /* another method to call the function using pointer to function g_callBackPtr(); */
+	}
+}
+
+uint8 Timer_Init(TIMER_Config* config)
+{
+
+	switch(config->timer_id){
+
+	/*********************TIMER0******************/
+	case TIMER0_ID:
+		/* Set FOC PIN as NON PWM MODE */
+		SET_BIT(TCCR0,FOC0);
+
+		/*Configure timer mode*/
+		switch(config->timer_mode)
+		{
+			case OVERFLOW_MODE :
+				CLEAR_BIT(TCCR0,WGM00);
+				CLEAR_BIT(TCCR0,WGM01);
+				break;
+
+			case COMPARE_MODE :
+				CLEAR_BIT(TCCR0,WGM00);
+				SET_BIT(TCCR0,WGM01);
+				break;
+			default :
+				return 0;
+		}
+
+		/* Configure OC PIN Mode */
+		switch(config->oc_mode)
+		{
+			case DISCONNECTED:
+				CLEAR_BIT(TCCR0,COM00);
+				CLEAR_BIT(TCCR0,COM01);
+				break;
+			case TOGGLE:
+				SET_BIT(TCCR0,COM00);
+				CLEAR_BIT(TCCR0,COM01);
+				break;
+			case CLEAR:
+				CLEAR_BIT(TCCR0,COM00);
+				SET_BIT(TCCR0,COM01);
+				break;
+			case SET:
+				SET_BIT(TCCR0,COM00);
+				SET_BIT(TCCR0,COM01);
+				break;
+			default :
+				return 0;
+		}
+
+		/* Clock Select */
+		TCCR0 = (TCCR0 & 0xF8) | (config->timer_clk & 0x07);
+
+		/*	Set The initial value */
+		TCNT0 = config->inital_value;
+
+		/* Set the compare value */
+		OCR0 = config->compare_value;
+
+		/*Set the interrupt Configuarion */
+		if(config->interrupt)
+		{
+			switch(config->timer_mode)
+			{
+			case OVERFLOW_MODE :
+				SET_BIT(TIMSK,TOIE0);
+				break;
+			case COMPARE_MODE :
+				SET_BIT(TIMSK,OCIE0);
+				break;
+			}
+		}
+
+		break;
+
+
+	/*********************TIMER 1******************/
+	case TIMER1_ID:
+
+		/* Set FOC PIN as NON PWM MODE */
+		SET_BIT(TCCR1A,FOC1A);
+
+		/*Configure timer mode*/
+		switch(config->timer_mode)
+		{
+			case OVERFLOW_MODE :
+				CLEAR_BIT(TCCR1A,WGM10);
+				CLEAR_BIT(TCCR1A,WGM11);
+				CLEAR_BIT(TCCR1B,WGM12);
+				CLEAR_BIT(TCCR1B,WGM13);
+				break;
+
+			case COMPARE_MODE :
+				CLEAR_BIT(TCCR1A,WGM10);
+				CLEAR_BIT(TCCR1A,WGM11);
+				SET_BIT(TCCR1B,WGM12);
+				CLEAR_BIT(TCCR1B,WGM13);
+				break;
+
+			default :
+				return 0;
+		}
+
+		/* Clock Select */
+		TCCR1B = (TCCR1B & 0xF8) | (config->timer_clk & 0x07);
+
+		/*	Set The initial value */
+		TCNT1 = config->inital_value;
+
+		/* Set the compare value */
+		OCR1A = config->compare_value;
+
+		/*Set the interrupt Configuarion */
+		if(config->interrupt)
+		{
+			switch(config->timer_mode)
+			{
+			case OVERFLOW_MODE :
+				SET_BIT(TIMSK,TOIE1);
+				break;
+			case COMPARE_MODE :
+				SET_BIT(TIMSK,OCIE1A);
+				break;
+			}
+		}
+
+		/* Configure OC PIN Mode */
+		switch(config->oc_mode)
+		{
+			case DISCONNECTED:
+				CLEAR_BIT(TCCR1A,COM1A0);
+				CLEAR_BIT(TCCR1A,COM1A1);
+				break;
+			case TOGGLE:
+				SET_BIT(DDRD,PD5);
+				SET_BIT(TCCR1A,COM1A0);
+				CLEAR_BIT(TCCR1A,COM1A1);
+				break;
+			case CLEAR:
+				SET_BIT(DDRD,PD5);
+				CLEAR_BIT(TCCR1A,COM1A0);
+				SET_BIT(TCCR1A,COM1A1);
+				break;
+			case SET:
+				SET_BIT(DDRD,PD5);
+				SET_BIT(TCCR1A,COM1A0);
+				SET_BIT(TCCR1A,COM1A1);
+				break;
+			default :
+				return 0;
+		}
+
+		break;
+
+	/*********************TIMER 2******************/
+	case TIMER2_ID:
+			/* Set FOC PIN as NON PWM MODE */
+			SET_BIT(TCCR2,FOC2);
+
+			/*Configure timer mode*/
+			switch(config->timer_mode)
+			{
+				case OVERFLOW_MODE :
+					CLEAR_BIT(TCCR2,WGM20);
+					CLEAR_BIT(TCCR2,WGM21);
+					break;
+
+				case COMPARE_MODE :
+					CLEAR_BIT(TCCR2,WGM20);
+					SET_BIT(TCCR2,WGM21);
+					break;
+				default :
+					return 0;
+			}
+
+			/* Configure OC PIN Mode */
+			switch(config->oc_mode)
+			{
+				case DISCONNECTED:
+					CLEAR_BIT(TCCR2,COM20);
+					CLEAR_BIT(TCCR2,COM21);
+					break;
+				case TOGGLE:
+					SET_BIT(TCCR2,COM20);
+					CLEAR_BIT(TCCR2,COM21);
+					break;
+				case CLEAR:
+					CLEAR_BIT(TCCR2,COM20);
+					SET_BIT(TCCR2,COM21);
+					break;
+				case SET:
+					SET_BIT(TCCR2,COM20);
+					SET_BIT(TCCR2,COM21);
+					break;
+				default :
+					return 0;
+			}
+
+			/* Clock Select */
+			TCCR2 = (TCCR2 & 0xF8) | (config->timer_clk & 0x07);
+
+			/*	Set The initial value */
+			TCNT2 = config->inital_value;
+
+			/* Set the compare value */
+			OCR2 = config->compare_value;
+
+
+			/*Set the interrupt Configuarion */
+			if(config->interrupt)
+			{
+				switch(config->timer_mode)
+				{
+				case OVERFLOW_MODE :
+					SET_BIT(TIMSK,TOIE2);
+
+					break;
+				case COMPARE_MODE :
+					SET_BIT(TIMSK,OCIE2);
+					break;
+				}
+			}
+			break;
+	default:
+		return 0;
+	}
+
+	return 1;
+}
+/* Function to deinit the timer it clears all the registers */
+void Timer_Deinit(uint8 timer_id)
+{
+	switch (timer_id)
+	{
+	case TIMER0_ID:
+		TCCR0=0;
+		TCNT0=0;
+		OCR0 =0;
+		CLEAR_BIT(TIMSK,TOIE0);
+		CLEAR_BIT(TIMSK,OCIE0);
+		break;
+
+	case TIMER1_ID:
+		TCCR1B=0;
+		TCCR1A=0;
+		TCNT1 =0;
+		OCR1A =0;
+		CLEAR_BIT(TIMSK,TOIE1);
+		CLEAR_BIT(TIMSK,OCIE1A);
+		break;
+
+	case TIMER2_ID:
+		TCCR2=0;
+		TCNT2=0;
+		OCR2 =0;
+		CLEAR_BIT(TIMSK,TOIE2);
+		CLEAR_BIT(TIMSK,OCIE2);
+		break;
+	default:
+		break;
+	}
+}
+
+/* Function to be called for stop the timer */
+void Timer_Stop(uint8 timer_id)
+{
+	switch (timer_id)
+		{
+		case TIMER0_ID:
+			TCCR0=0;
+			break;
+
+		case TIMER1_ID:
+			TCCR1B=0;
+			TCCR1A=0;
+			break;
+
+		case TIMER2_ID:
+			TCCR2=0;
+			break;
+		default:
+			break;
+		}
+}
+
+void Timer_SetCallBack(uint8 timer_id,volatile void(*a_ptr)(void), TIMER_Mode mode)
+{
+	switch (timer_id)
+		{
+		case TIMER0_ID:
+			switch(mode)
+			{
+				case OVERFLOW_MODE :
+					g_callBackPtr_timer0_OVF = a_ptr;
+					break;
+
+				case COMPARE_MODE :
+					g_callBackPtr_timer0_COMP = a_ptr;
+					break;
+			}
+			break;
+
+		case TIMER1_ID:
+			switch(mode)
+			{
+				case OVERFLOW_MODE :
+					g_callBackPtr_timer1_OVF = a_ptr;
+					break;
+
+				case COMPARE_MODE :
+					g_callBackPtr_timer1_COMP = a_ptr;
+					break;
+			}
+			break;
+
+		case TIMER2_ID:
+			switch(mode)
+			{
+				case OVERFLOW_MODE :
+					g_callBackPtr_timer2_OVF = a_ptr;
+					break;
+
+				case COMPARE_MODE :
+					g_callBackPtr_timer2_COMP = a_ptr;
+					break;
+			}
+			break;
+		default:
+			break;
+		}
+}
+
+void Timer_SetCompareValue(uint8 timer_id ,uint16 value)
+{
+	switch (timer_id)
+		{
+		case TIMER0_ID:
+			OCR0 = value;
+			break;
+		case TIMER1_ID:
+			OCR1A = value;
+			break;
+		case TIMER2_ID:
+			OCR2 = value;
+			break;
+		default:
+			break;
+		}
+}
+

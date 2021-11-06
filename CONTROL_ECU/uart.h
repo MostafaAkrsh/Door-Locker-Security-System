@@ -19,11 +19,6 @@
  *  		ENUMS AND CONFIG STRUCT		 *
  *****************************************/
 
-/* enum for Select the state */
-typedef enum {
-	OFF = 0,ON = 1
-}State;
-
 /* enum for choose parity mode */
 typedef enum {
 	DISABLED = 0,
@@ -47,12 +42,12 @@ typedef enum {
 
 /*Struct for initiazlie the UART module */
 typedef struct {
-	State RxEn; 			/* Enable Rx */
-	State TxEn; 			/* Enable Tx */
-	State doublespeed; 		/* double transmission speed rate */
-	State RxInt; 			/* Enable Rx Interrupt */
-	State TxInt; 			/* Enable Tx Interrupt */
-	State EMPInt; 			/* Enable Data register Empty Interrupt */
+	uint8 RxEn; 			/* Enable Rx */
+	uint8 TxEn; 			/* Enable Tx */
+	uint8 doublespeed; 		/* double transmission speed rate */
+	uint8 RxInt; 			/* Enable Rx Interrupt */
+	uint8 TxInt; 			/* Enable Tx Interrupt */
+	uint8 EMPInt; 			/* Enable Data register Empty Interrupt */
 	UART_ParityMode parity; /* Parity Mode */
 	UART_StopBits stopbits; /* No of Stop Bits */
 	UART_DataBits databits; /* No of Data bits */
@@ -95,5 +90,13 @@ void UART_sendString(const uint8 *Str);
  * Receive the required string until the '#' symbol through UART from the other UART device.
  */
 void UART_receiveString(uint8 *Str); // Receive until #
+
+/* Call back functions Definitions */
+
+void UART_RX_SetCallBack(volatile void(*a_ptr)(void));
+
+void UART_TX_SetCallBack(volatile void(*a_ptr)(void));
+
+void UART_UDRE_SetCallBack(volatile void(*a_ptr)(void));
 
 #endif /* UART_H_ */

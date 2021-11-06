@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;CONTROL_ECU/helperfunctions.cpp&apos; to &apos;helperfunctions.c&apos;" description="Rename resource &apos;helperfunctions.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="helperfunctions.cpp" name="helperfunctions.c" stamp="1635758936924" updateReferences="true"/>
+</session>

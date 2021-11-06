@@ -40,13 +40,6 @@ typedef enum
 	SET
 }TIMER_OC_Mode;
 
-/* Enum for to enable of disable the interrupt */
-typedef enum
-{
-	OFF = 0,ON = 1
-}State;
-
-
 /*
  *  Enum for Choosing the CLK Source & the prescaler
  */
@@ -77,7 +70,7 @@ typedef struct
 	TIMER_Mode timer_mode ;
 	TIMER_OC_Mode oc_mode ;
 	TIMER_CLK timer_clk;
-	State interrupt ;
+	uint8 interrupt ;
 	uint16 inital_value ;
 	uint16 compare_value ;
 }TIMER_Config;

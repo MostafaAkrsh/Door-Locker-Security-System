@@ -1,0 +1,16 @@
+/*
+ * helpers.h
+ *
+ *  Created on: Nov 4, 2021
+ *      Author: LENOVO
+ */
+
+#ifndef HELPERS_H_
+#define HELPERS_H_
+
+/* Steps to control the flow of the system */
+typedef enum {
+	SAVE_PASSWORD,CHECK_PASSWORD,OPEN_DOOR,CLOSE_DOOR,THIEF
+}State;
+
+#endif /* HELPERS_H_ */

@@ -1,0 +1,16 @@
+/*
+ * pwm.h
+ *
+ *  Created on: Oct 11, 2021
+ *      Author: LENOVO
+ */
+
+#ifndef PWM_H_
+#define PWM_H_
+
+#include "std_types.h"
+
+void PWM_Timer0_Start(uint8 duty_cycle);
+void PWM_Timer0_Stop();
+
+#endif /* PWM_H_ */

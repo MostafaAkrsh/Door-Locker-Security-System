@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;HMI_ECU/helper.c&apos; to &apos;helpers.c&apos;" description="Rename resource &apos;helper.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="helper.c" name="helpers.c" stamp="1635936786976" updateReferences="true"/>
+</session>

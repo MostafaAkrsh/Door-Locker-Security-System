@@ -24,6 +24,21 @@ typedef unsigned char boolean;
 #define TRUE        (1u)
 #endif
 
+#ifndef OFF
+#define OFF       (0u)
+#endif
+#ifndef ON
+#define ON        (1u)
+#endif
+
+#ifndef NO
+#define NO       (0u)
+#endif
+#ifndef YES
+#define YES        (1u)
+#endif
+
+
 #define LOGIC_HIGH        (1u)
 #define LOGIC_LOW         (0u)
 

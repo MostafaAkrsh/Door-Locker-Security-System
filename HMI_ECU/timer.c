@@ -50,7 +50,7 @@ ISR(TIMER2_OVF_vect)
 /* Interrupt Service Routine for TIMER0 Overflow Mode */
 ISR(TIMER0_COMP_vect)
 {
-	if(g_callBackPtr_timer0_OVF != NULL_PTR)
+	if(g_callBackPtr_timer0_COMP != NULL_PTR)
 	{
 		/* Call the Call Back function in the application after the edge is detected */
 		(*g_callBackPtr_timer0_COMP)(); /* another method to call the function using pointer to function g_callBackPtr(); */
@@ -60,7 +60,7 @@ ISR(TIMER0_COMP_vect)
 /* Interrupt Service Routine for TIMER1 Overflow Mode */
 ISR(TIMER1_COMPA_vect)
 {
-	if(g_callBackPtr_timer1_OVF != NULL_PTR)
+	if(g_callBackPtr_timer1_COMP != NULL_PTR)
 	{
 		/* Call the Call Back function in the application after the edge is detected */
 		(*g_callBackPtr_timer1_COMP)(); /* another method to call the function using pointer to function g_callBackPtr(); */
@@ -70,7 +70,7 @@ ISR(TIMER1_COMPA_vect)
 /* Interrupt Service Routine for TIMER2 Overflow Mode */
 ISR(TIMER2_COMP_vect)
 {
-	if(g_callBackPtr_timer2_OVF != NULL_PTR)
+	if(g_callBackPtr_timer2_COMP != NULL_PTR)
 	{
 		/* Call the Call Back function in the application after the edge is detected */
 		(*g_callBackPtr_timer2_COMP)(); /* another method to call the function using pointer to function g_callBackPtr(); */
@@ -111,14 +111,17 @@ uint8 Timer_Init(TIMER_Config* config)
 				CLEAR_BIT(TCCR0,COM01);
 				break;
 			case TOGGLE:
+				SET_BIT(DDRB,PB3);
 				SET_BIT(TCCR0,COM00);
 				CLEAR_BIT(TCCR0,COM01);
 				break;
 			case CLEAR:
+				SET_BIT(DDRB,PB3);
 				CLEAR_BIT(TCCR0,COM00);
 				SET_BIT(TCCR0,COM01);
 				break;
 			case SET:
+				SET_BIT(DDRB,PB3);
 				SET_BIT(TCCR0,COM00);
 				SET_BIT(TCCR0,COM01);
 				break;
@@ -127,8 +130,7 @@ uint8 Timer_Init(TIMER_Config* config)
 		}
 
 		/* Clock Select */
-	//	TCCR0 = (TCCR0 & 0xF8) | (config->timer_clk & 0x07);
-		TCCR0 = (1<<FOC0) | (1<<CS02) | (1<<CS00);
+		TCCR0 = (TCCR0 & 0xF8) | (config->timer_clk & 0x07);
 
 		/*	Set The initial value */
 		TCNT0 = config->inital_value;
@@ -149,10 +151,11 @@ uint8 Timer_Init(TIMER_Config* config)
 				break;
 			}
 		}
+
 		break;
 
 
-	/*********************TIMER1******************/
+	/*********************TIMER 1******************/
 	case TIMER1_ID:
 
 		/* Set FOC PIN as NON PWM MODE */
@@ -202,9 +205,35 @@ uint8 Timer_Init(TIMER_Config* config)
 			}
 		}
 
+		/* Configure OC PIN Mode */
+		switch(config->oc_mode)
+		{
+			case DISCONNECTED:
+				CLEAR_BIT(TCCR1A,COM1A0);
+				CLEAR_BIT(TCCR1A,COM1A1);
+				break;
+			case TOGGLE:
+				SET_BIT(DDRD,PD5);
+				SET_BIT(TCCR1A,COM1A0);
+				CLEAR_BIT(TCCR1A,COM1A1);
+				break;
+			case CLEAR:
+				SET_BIT(DDRD,PD5);
+				CLEAR_BIT(TCCR1A,COM1A0);
+				SET_BIT(TCCR1A,COM1A1);
+				break;
+			case SET:
+				SET_BIT(DDRD,PD5);
+				SET_BIT(TCCR1A,COM1A0);
+				SET_BIT(TCCR1A,COM1A1);
+				break;
+			default :
+				return 0;
+		}
+
 		break;
 
-	/*********************TIMER2******************/
+	/*********************TIMER 2******************/
 	case TIMER2_ID:
 			/* Set FOC PIN as NON PWM MODE */
 			SET_BIT(TCCR2,FOC2);
@@ -233,14 +262,17 @@ uint8 Timer_Init(TIMER_Config* config)
 					CLEAR_BIT(TCCR2,COM21);
 					break;
 				case TOGGLE:
+					SET_BIT(DDRD,PD7);
 					SET_BIT(TCCR2,COM20);
 					CLEAR_BIT(TCCR2,COM21);
 					break;
 				case CLEAR:
+					SET_BIT(DDRD,PD7);
 					CLEAR_BIT(TCCR2,COM20);
 					SET_BIT(TCCR2,COM21);
 					break;
 				case SET:
+					SET_BIT(DDRD,PD7);
 					SET_BIT(TCCR2,COM20);
 					SET_BIT(TCCR2,COM21);
 					break;

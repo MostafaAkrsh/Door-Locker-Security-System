@@ -1,33 +1,124 @@
-#include "timer.h"
-#include "avr/io.h"
+#include "helpers.h"
 
-volatile void ledony()
-{
-	DDRC = 0xFF;
-	PORTC = ~PORTC;
-}
+
+uint8 g_pass[PASS_SIZE];
+
+
+uint8 EEPROM_pass[PASS_SIZE];
+uint8 EE[PASS_SIZE];
+
+uint8 key;
 
 int main()
 {
-	TIMER_Config config;
+	LCD_init();
+	LCD_displayString("meme");
 
-	SREG |= (1<<7);
-	config.timer_id = TIMER1_ID;
-	config.timer_mode = OVERFLOW_MODE;
-	config.timer_clk = PRESCALER256;
-	config.oc_mode = DISCONNECTED;
-	config.interrupt = 1;
-	config.inital_value = 0;
-	config.compare_value = 155;
+	/* Buzzer Initialization */
+	Buzzer_init(PORTB_ID ,PIN0_ID);
 
-	Timer_Init(&config);
+	/* Motor Initialization */
+	DcMotor_Init(PORTB_ID,PIN5_ID,PIN4_ID);
 
-	 volatile void (*ptr)(void);
-	 ptr = ledony;
+	/* EEPROM Init */
+	EEPROM_init();
 
-	Timer_SetCallBack(TIMER1_ID,ptr, OVERFLOW_MODE);
+	/* Uart Initialization */
+	UART_Config uconfig;
+
+	uconfig.RxEn = ON;
+	uconfig.TxEn = ON;
+	uconfig.EMPInt = OFF;
+	uconfig.RxInt = OFF;
+	uconfig.TxInt = OFF;
+	uconfig.doublespeed = ON;
+	uconfig.parity = EVEN;
+	uconfig.stopbits = ONE;
+	uconfig.databits = EIGHT;
+	uconfig.baudrate = 9600;
+
+	UART_init(&uconfig);
+
+	LCD_displayString("meme");
+
+	//Buzzer_ON();
+	//DcMotor_Rotate(CW,10);
+	State state = IDLE;
+
 	while(1)
 	{
+		switch(state)
+			{
+			case IDLE:
+				key = UART_recieveByte();
+				if( key=='!' )
+				{
+					LCD_clearScreen();
+					state = SAVE_PASSWORD;
+				}
+			break;
+			case SAVE_PASSWORD:
+				UART_sendByte('!');
+				UART_receiveString(g_pass);
+				LCD_displayString(g_pass);
+				EEPROM_writeString(g_pass, PASS_SIZE);
+				LCD_displayString("written");
+				state = CHECK_PASSWORD;
+
+				break;
+			case CHECK_PASSWORD:
+				LCD_clearScreen();
+
+				key = UART_recieveByte();
+				LCD_displayCharacter(key);
+				if(key == '0')
+				{
+					state = THIEF;
+					break;
+				}
+
+				if(key == '+'){
+				UART_sendByte('!');
+
+				UART_receiveString(g_pass);
+				EEPROM_readString(EEPROM_pass, PASS_SIZE);
+				LCD_moveCursor(1,0);
+
+				if(check_identical(EE,g_pass))
+				{
+					LCD_displayString("identical");
+
+					state = OPEN_DOOR;
+				}
+				else
+				{
+					key = UART_recieveByte();
+					if(key == '+')
+					{
+					UART_sendByte('X');
+					}
+					LCD_displayString("not");
+				}
+				}
+				break;
+			case OPEN_DOOR:
+
+				key = UART_recieveByte();
+				if(key == '+')
+				UART_sendByte('+');
+				state = CHECK_PASSWORD;
+				break;
+			case CLOSE_DOOR:
+				break;
+			case THIEF:
+				LCD_displayString("ttt");
+				Buzzer_ON();
+				_delay_ms(100);
+				Buzzer_OFF();
+				_delay_ms(100);
+				break;
+
+	}
 
 	}
 }

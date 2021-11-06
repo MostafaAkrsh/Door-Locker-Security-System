@@ -1,0 +1,14 @@
+#include "stdio.h"
+
+uint32 power(uint8 base , uint8 power)
+{
+	uint16 sum = 1;
+
+	int i = 1;
+	for(i = 1 ; i <= power ; i++)
+	{
+		sum *= base;
+	}
+
+	return sum;
+}

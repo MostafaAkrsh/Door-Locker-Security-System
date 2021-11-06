@@ -1,0 +1,17 @@
+/*
+ * helperfunctions.h
+ *
+ *  Created on: Nov 1, 2021
+ *      Author: LENOVO
+ */
+
+#ifndef HELPERFUNCTIONS_H_
+#define HELPERFUNCTIONS_H_
+
+class helper_functions {
+public:
+	virtual ~helper_functions();
+	helper_functions();
+};
+
+#endif /* HELPERFUNCTIONS_H_ */

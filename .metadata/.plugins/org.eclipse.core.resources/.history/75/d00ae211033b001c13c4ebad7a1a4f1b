@@ -1,0 +1,51 @@
+/*
+ * dcmotor.cpp
+ *
+ *  Created on: Oct 11, 2021
+ *      Author: LENOVO
+ */
+
+#include "dcmotor.h"
+#include "gpio.h"
+#include "avr/io.h"
+#include "pwm.h"
+
+/* port and pin to only used in the same file */
+static uint8 port;
+static uint8 pin1;
+static uint8 pin2;
+
+void DcMotor_Init(uint8 Port , uint8 Pin1, uint8 Pin2)
+{
+	/* Make the wanted pins Output Pin */
+	GPIO_setupPinDirection(Port, Pin1, PIN_OUTPUT);
+	GPIO_setupPinDirection(Port, Pin2, PIN_OUTPUT);
+	port = Port;
+	pin1 = Pin1;
+	pin2 = Pin2;
+}
+
+/*
+ * Control the motor state and speed
+ */
+void DcMotor_Rotate(DcMotor_State state, uint8 speed)
+{
+
+	PWM_Timer0_Start(speed);
+
+	switch (state) {
+	case STOP :
+	GPIO_writePin(port, pin1, 0);
+	GPIO_writePin(port, pin2, 0);
+	PWM_Timer0_Stop();
+	break;
+	case CW :
+	GPIO_writePin(port, pin1, 0);
+	GPIO_writePin(port, pin2, 1);
+	break;
+	case A_CW :
+	GPIO_writePin(port, pin1, 1);
+	GPIO_writePin(port, pin2, 0);
+	break;
+	}
+}

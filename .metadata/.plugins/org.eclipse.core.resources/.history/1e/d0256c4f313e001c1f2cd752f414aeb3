@@ -1,0 +1,33 @@
+/*
+ * helpers.h
+ *
+ *  Created on: Nov 4, 2021
+ *      Author: LENOVO
+ */
+
+#ifndef HELPERS_H_
+#define HELPERS_H_
+
+#include "lcd.h"
+#include "common_macros.h"
+#include "dcmotor.h"
+#include "buzzer.h"
+#include "std_types.h"
+#include "gpio.h"
+#include "util/delay.h"
+#include "uart.h"
+#include "avr/io.h"
+#include "external_eeprom.h"
+#include "std_types.h"
+
+#define PASS_SIZE 5
+
+
+/* Steps to control the flow of the system */
+typedef enum {
+	SAVE_PASSWORD,CHECK_PASSWORD,OPEN_DOOR,CLOSE_DOOR,THIEF
+}State;
+
+uint8 check_identical(uint8* pass1, uint8* pass2);
+
+#endif /* HELPERS_H_ */

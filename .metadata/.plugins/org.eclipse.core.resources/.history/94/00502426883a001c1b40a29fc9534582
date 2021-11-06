@@ -1,0 +1,27 @@
+/*
+ * buzzer.h
+ *
+ *  Created on: Oct 31, 2021
+ *      Author: LENOVO
+ */
+
+#ifndef BUZZER_H_
+#define BUZZER_H_
+
+#include "std_types.h"
+
+/*******************************************************************************
+ *                      Functions Prototypes                                   *
+ *******************************************************************************/
+void LCD_init(void);
+void LCD_sendCommand(uint8 command);
+void LCD_displayCharacter(uint8 data);
+void LCD_displayString(const char *Str);
+void LCD_moveCursor(uint8 row,uint8 col);
+void LCD_displayStringRowColumn(uint8 row,uint8 col,const char *Str);
+void LCD_intgerToString(int data);
+void LCD_clearScreen(void);
+
+
+
+#endif /* BUZZER_H_ */

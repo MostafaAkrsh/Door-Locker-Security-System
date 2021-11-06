@@ -1,0 +1,44 @@
+/*
+ * dcmotor.cpp
+ *
+ *  Created on: Oct 11, 2021
+ *      Author: LENOVO
+ */
+
+#include "dcmotor.h"
+#include "gpio.h"
+#include "avr/io.h"
+#include "pwm.h"
+void DcMotor_Init(void)
+{
+	GPIO_setupPinDirection(PORTB_ID,0,PIN_OUTPUT);
+	GPIO_setupPinDirection(PORTB_ID,1,PIN_OUTPUT);
+
+	GPIO_writePin(PORTB_ID, 0, 0);
+	GPIO_writePin(PORTB_ID, 1, 0);
+}
+
+/*
+ * Control the motor state and speed
+ */
+void DcMotor_Rotate(DcMotor_State state, uint8 speed)
+{
+
+	PWM_Timer0_Start(speed);
+
+	switch (state) {
+	case STOP :
+	GPIO_writePin(PORTB_ID, 0, 0);
+	GPIO_writePin(PORTB_ID, 1, 0);
+	PWM_Timer0_Stop();
+	break;
+	case CW :
+	GPIO_writePin(PORTB_ID, 0, 0);
+	GPIO_writePin(PORTB_ID, 1, 1);
+	break;
+	case A_CW :
+	GPIO_writePin(PORTB_ID, 0, 1);
+	GPIO_writePin(PORTB_ID, 1, 0);
+	break;
+	}
+}
